@@ -26,29 +26,28 @@ Network.prototype.predict = function(input) {
     var output = [];
 
     for (var h = 0; h < this.nodes[1]; h++) {
-        var bias = weights.pop();
+        var bias = weights.shift();
         hidden.push(bias);
         for (var i = 0; i < this.nodes[0]; i++) {
-            var weight = weights.pop();
+            var weight = weights.shift();
             hidden[h] = hidden[h] + weight * input[i];
         }
         hidden[h] = this._activation(hidden[h]);
     }
 
     for (var o = 0; o < this.nodes[2]; o++) {
-        var bias = weights.pop();
+        var bias = weights.shift();
         output.push(bias);
         for (var h = 0; h < this.nodes[1]; h++) {
-            var weight = weights.pop();
+            var weight = weights.shift();
             output[o] = output[o] + weight * hidden[h];
         }
     }
 
     if (this.skip) {
         for (var o = 0; o < this.nodes[2]; o++) {
-            var s = weights.pop();
             for (var i = 0; i < this.nodes[0]; i++) {
-                var weight = weights.pop();
+                var weight = weights.shift();
                 output[o] = output[o] + weight * input[i];
             }
         }
