@@ -1,7 +1,8 @@
-Network = function(nodes, weights, linout) {
+Network = function(nodes, weights, linout, softmax) {
     this.nodes = nodes;
     this.weights = weights;
     this.linout = linout;
+    this.softmax = softmax;
     if (weights.length > (nodes[0] * nodes[1] + nodes[1] * nodes[2] + nodes[1] + nodes[2])) {
         this.skip = true;
     } else {
@@ -57,7 +58,15 @@ Network.prototype.predict = function(input) {
         }
     }
 
-    if (!this.linout) {
+    if (this.softmax) {
+        var s = 0;
+        for (var o = 0; o < this.nodes[2]; o++) {
+            s = s + Math.exp(output[o]);
+        }
+        for (var o = 0; o < this.nodes[2]; o++) {
+            output[o] = Math.exp(output[o]) / s;
+        }
+    } else if (!this.linout) {
         for (var o = 0; o < this.nodes[2]; o++) {
             output[o] = this._activation(output[o]);
         }
