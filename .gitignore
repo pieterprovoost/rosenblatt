@@ -2,3 +2,4 @@ info
 .idea
 rosenblatt.iml
 **/.DS_Store
+npm-debug.log
