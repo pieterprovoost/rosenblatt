@@ -22,6 +22,18 @@ Network.prototype._activation = function(sum) {
 
 Network.prototype.predict = function(input) {
 
+    output = [];
+
+    for (var i = 0; i < input.length; i++) {
+        output.push(this._predict(input[i]));
+    }
+
+    return output;
+
+};
+
+Network.prototype._predict = function(input) {
+
     if (input.length != this.nodes[0]) {
         throw "Input should have dimension " + this.nodes[0];
     }
