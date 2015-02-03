@@ -47,10 +47,7 @@ Network.prototype.predict = function(input) {
             var weight = weights.shift();
             output[o] = output[o] + weight * hidden[h];
         }
-    }
-
-    if (this.skip) {
-        for (var o = 0; o < this.nodes[2]; o++) {
+        if (this.skip) {
             for (var i = 0; i < this.nodes[0]; i++) {
                 var weight = weights.shift();
                 output[o] = output[o] + weight * input[i];
